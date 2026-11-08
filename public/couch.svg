@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 112">
+  <ellipse cx="100" cy="104" rx="72" ry="4" fill="#1a1a1a" opacity="0.12"/>
+  <rect x="48" y="96" width="14" height="7" rx="1.5" fill="#3a2418"/>
+  <rect x="138" y="96" width="14" height="7" rx="1.5" fill="#3a2418"/>
+  <path fill="#6b4630" d="M42 88h116c6 0 8 2.5 8 6s-2 6-8 6H42c-6 0-8-2.5-8-6s2-6 8-6z"/>
+  <rect x="14" y="50" width="48" height="44" rx="22" fill="#e45436"/>
+  <rect x="20" y="56" width="36" height="32" rx="16" fill="#ff6b4a"/>
+  <rect x="138" y="50" width="48" height="44" rx="22" fill="#e45436"/>
+  <rect x="144" y="56" width="36" height="32" rx="16" fill="#ff6b4a"/>
+  <path fill="#ff6b4a" d="M48 44c0-16 12-26 30-26h44c18 0 30 10 30 26v30H48V44z"/>
+  <path fill="#ff8d74" d="M70 22H90A6 6 0 0 1 96 28V52A6 6 0 0 1 90 58H70A14 14 0 0 1 56 44V36A14 14 0 0 1 70 22Z"/>
+  <path fill="#ff8d74" d="M110 22H130A14 14 0 0 1 144 36V44A14 14 0 0 1 130 58H110A6 6 0 0 1 104 52V28A6 6 0 0 1 110 22Z"/>
+  <path fill="#e45436" d="M46 68h108v14c0 6-6 10-14 10H60c-8 0-14-4-14-10V68z"/>
+  <rect x="54" y="70" width="42" height="16" rx="5" fill="#ff7a58"/>
+  <rect x="104" y="70" width="42" height="16" rx="5" fill="#ff7a58"/>
+</svg>

@@ -1,0 +1,5 @@
+.venv/
+vendor/
+weights/
+out/
+__pycache__/

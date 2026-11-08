@@ -8,8 +8,18 @@
     "start": "next start -p 6020"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "next": "16.1.5",
+    "qrcode": "^1.5.4",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "redis": "^6.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "autoprefixer": "^10.6.2",
+    "daisyui": "^5.7.50",
+    "tailwindcss": "^4.3.5"
   }
 }

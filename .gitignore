@@ -1,5 +1,19 @@
 node_modules
+data/scenes
 .next
 .env*
 *.log
 .DS_Store
+data/pieces
+
+public/vote-set/
+data/votes/
+data/accounts.db*
+data/*.bak*
+logs/
+__pycache__/
+
+# Local Hunyuan3D (ml/hy3d_local.py): vendored upstream repo and its venv
+ml/vendor/
+ml/hy3d-venv/
+ml/.hf/

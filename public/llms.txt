@@ -1,0 +1,27 @@
+# Furniture Finder
+
+> Virtual staging with real furniture you can buy. Straighten a listing photo, set real pieces on the floor at true size, and let your own AI render the room.
+
+Furniture Finder is for landlords, real estate agents, and stagers who want an empty listing photo to show furniture, and for anyone checking whether a piece fits a room before buying it.
+
+- Straighten: wide listing shots make walls lean in. Furniture Finder corrects the camera distortion so verticals stand straight.
+- Real pieces: every piece is a real listing with its seller, price, width, height, depth, and photos from more than one side.
+- True scale: pieces are set on the floor at their real size, with the window light and floor line kept.
+- Your AI renders: the saved room, a mockup, and a mask go to your own model (Claude, ChatGPT, Gemini, Codex, Cursor) through the Furniture Finder MCP server, which does the photoreal render. The site doesn't spend image credits on that step.
+
+## Pricing
+
+Trying a room is free. $12 a month saves rooms, connects your AI over MCP, and adds custom pieces. The render runs on your model. Full page: https://furniturefinder.co/pricing
+
+## Links
+
+- [Pricing](https://furniturefinder.co/pricing): what $12 includes, and the markdown copy at https://furniturefinder.co/pricing.md
+- [Studio](https://furniturefinder.co/studio): try it free in the browser
+- [Pick a piece](https://furniturefinder.co/pick): browse the catalog
+- [Piece dimensions](https://furniturefinder.co/pieces): every catalog piece with its width, depth, height, price, seller link, and the space it needs around it
+- [Docs](https://furniturefinder.co/docs): getting started, straighten, connect an agent. Each page has a markdown copy at the same path plus `.md`
+- [Rooms](https://furniturefinder.co/rooms): empty and furnished photos of the living room, kitchen, and three bedrooms at 73 E Patterson. Each room has a markdown copy at the same path plus `.md`
+- [About](https://furniturefinder.co/about): Brian Lesko, the four leased houses, and the markdown copy at https://furniturefinder.co/about.md
+- [Blog](https://furniturefinder.co/blog): listing photo guides. Each post has a markdown copy at the same path plus `.md`
+- [Virtually staged photo disclosure](https://furniturefinder.co/blog/virtually-staged-photo-disclosure): California AB 723 and how MLS photo rules differ
+- MCP server: https://furniturefinder.co/api/mcp (Streamable HTTP, `Authorization: Bearer <key>` from the dashboard)

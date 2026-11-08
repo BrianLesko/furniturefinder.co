@@ -1,0 +1,27 @@
+www.furniturefinder.co {
+  tls {
+    dns cloudflare {env.CLOUDFLARE_AUTH_TOKEN}
+  }
+  redir https://furniturefinder.co{uri} permanent
+}
+
+furniturefinder.co {
+  tls {
+    dns cloudflare {env.CLOUDFLARE_AUTH_TOKEN}
+  }
+
+  # Straighten votes are cast from the dev server only; the public site can
+  # read the ranking but not write votes.
+  @voteWrite {
+    path /api/votes /api/votes/*
+    not method GET HEAD
+  }
+  handle @voteWrite {
+    respond 403
+  }
+
+  # Everything else: the Next.js app (`npx next start -p 6030`, from start.sh).
+  handle {
+    reverse_proxy 0.0.0.0:6030
+  }
+}

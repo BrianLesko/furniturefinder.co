@@ -1,375 +1,325 @@
-:root {
-  --cream: #fdf8d8;
-  --ink: #1a1a1a;
-  --hot: #ff6b4a;
-  --pink: #ffd4c4;
-  --blue: #4a9bd9;
-  --yellow: #ffea63;
-  --floor: #e7c98a;
-  --white: #fff;
-  --font-display: var(--font-chewy), "Comic Sans MS", cursive;
-  --font-body: var(--font-space), ui-monospace, monospace;
+@import "tailwindcss";
+/* Only the before-and-after slider. No daisyUI theme or base styles. */
+@plugin "daisyui" {
+  themes: false;
+  include: diff;
+}
+
+@theme {
+  --color-ink: #1a1a1a;
+  --color-hot: #ff6b4a;
+  --color-cream: #fdf8d8;
+  --color-blush: #ffd4c4;
+  --color-sky: #4a9bd9;
+  --color-yellow: #ffea63;
+  --color-floor: #e7c98a;
+  --font-display: var(--font-chewy), cursive;
+  --font-mono: var(--font-space), ui-monospace, monospace;
   --font-note: var(--font-caveat), cursive;
 }
 
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--cream);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.5;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* The colors daisyUI's diff paints its divider and handle with. */
+    --color-base-100: #fff;
+    --color-base-content: var(--color-ink);
+  }
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+  }
+  figure {
+    margin: 0;
+  }
+  a {
+    color: inherit;
+  }
 }
 
-a { color: inherit; }
-
-.wrap {
-  width: min(1120px, calc(100% - 40px));
-  margin: 0 auto;
+.mark {
+  overflow: visible;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: min(1120px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 22px 0 8px;
+.mark-lens,
+.mark-zoom {
+  transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  font-weight: 700;
+:is(a:hover, a:focus-visible) .mark .mark-lens,
+.mark:hover .mark-lens,
+.mark-spin .mark-lens {
+  transform: translate(-6.5px, 5.5px);
 }
 
-.brand svg { display: block; }
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+:is(a:hover, a:focus-visible) .mark .mark-zoom,
+.mark:hover .mark-zoom,
+.mark-spin .mark-zoom {
+  transform: translate(6.5px, -5.5px);
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border: 2px solid var(--ink);
+@keyframes mark-orbit {
+  from { transform: translate(-6.5px, 5.5px) rotate(0deg) translate(0, 2.75px) rotate(0deg) translate(0, -2.75px); }
+  to { transform: translate(-6.5px, 5.5px) rotate(360deg) translate(0, 2.75px) rotate(-360deg) translate(0, -2.75px); }
+}
+
+@keyframes mark-orbit-zoom {
+  from { transform: translate(0, 2.75px) rotate(0deg) translate(0, -2.75px) rotate(0deg) translate(6.5px, -5.5px); }
+  to { transform: translate(0, 2.75px) rotate(360deg) translate(0, -2.75px) rotate(-360deg) translate(6.5px, -5.5px); }
+}
+
+.mark-spin .mark-lens {
+  animation: mark-orbit 1.1s cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.mark-spin .mark-zoom {
+  animation: mark-orbit-zoom 1.1s cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-lens,
+  .mark-zoom {
+    transition: none;
+  }
+}
+
+@keyframes piece-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+    translate: -18px 12px;
+  }
+}
+
+.piece-leaving {
+  animation: piece-out 0.32s ease-in forwards;
+}
+
+/* textwork.co's compare handle: a hairline divider with a soft inner shadow
+   and a small dark knob with chevrons, in place of daisyUI's white pill. */
+.render-diff .diff-item-1 {
+  border-right: 1px solid var(--color-ink);
+  box-shadow: inset -8px 0 8px -7px rgb(0 0 0 / 0.21);
+}
+
+.render-diff .diff-item-2::after {
+  width: 29px;
+  height: 29px;
+  border: none;
+  outline: none;
   border-radius: 999px;
-  box-shadow: 3px 3px 0 0 var(--ink);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  background-color: var(--color-hot);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' fill='none'%3E%3Cpath d='M4.5 7.375 1.5 4.375 4.5 1.375' stroke='white' stroke-width='1.2' stroke-miterlimit='10' stroke-linecap='square'/%3E%3Cpath d='M11.5 7.375 14.5 4.375 11.5 1.375' stroke='white' stroke-width='1.2' stroke-miterlimit='10' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 21px 12px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.15);
 }
 
-.btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 0 var(--ink);
+.render-diff:hover .diff-item-2::after {
+  height: 29px;
 }
 
-.btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 0 var(--ink);
+/* "Take the scene with you": every mock loops on the same 5.5s clock, so the
+   delays set on each element keep their order from one loop to the next. */
+.take-card {
+  --take-dur: 5.5s;
 }
 
-.btn-ghost {
-  background: var(--white);
-  color: var(--ink);
-  font-weight: 700;
-  font-size: 14px;
-  padding: 8px 16px;
+.take-pop,
+.take-slide {
+  animation-duration: var(--take-dur);
+  animation-iteration-count: infinite;
+  animation-fill-mode: backwards;
 }
 
-.btn-hot {
-  background: var(--hot);
-  color: var(--white);
-  font-family: var(--font-display);
-  letter-spacing: 0.02em;
-  border-width: 3px;
+.take-pop {
+  animation-name: take-pop;
+  animation-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
-.btn-lg {
-  font-size: 22px;
-  padding: 12px 28px;
+@keyframes take-pop {
+  0%, 4% { opacity: 0; scale: 0.7; }
+  10%, 86% { opacity: 1; scale: 1; }
+  92%, 100% { opacity: 0; scale: 0.9; }
 }
 
-.hero {
-  text-align: center;
-  padding: 48px 0 28px;
+.take-slide {
+  animation-name: take-slide;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin: 0;
+@keyframes take-slide {
+  0%, 4% { opacity: 0; translate: -12px 0; }
+  11%, 86% { opacity: 1; translate: 0 0; }
+  92%, 100% { opacity: 0; translate: 0 0; }
 }
 
-h1 {
-  font-size: clamp(3rem, 8vw, 5.6rem);
-  line-height: 0.92;
-  color: var(--hot);
-  -webkit-text-stroke: 2px var(--ink);
-  paint-order: stroke fill;
-  text-shadow: 4px 4px 0 var(--white);
+@media (prefers-reduced-motion: reduce) {
+  .take-pop,
+  .take-slide {
+    animation: none;
+  }
 }
 
-h2 {
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
-  line-height: 0.95;
-  color: var(--hot);
-  -webkit-text-stroke: 1.5px var(--ink);
-  paint-order: stroke fill;
-  text-shadow: 3px 3px 0 var(--white);
-}
-
-h3 {
-  font-size: 1.7rem;
-  line-height: 1.05;
-  color: var(--ink);
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-  letter-spacing: 0.02em;
-}
-
-.lede {
-  max-width: 40rem;
-  margin: 28px auto 0;
-  font-size: 1.15rem;
-  line-height: 1.65;
-}
-
-.hero-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 28px;
-}
-
-.fine {
-  margin: 18px 0 0;
-  font-size: 12px;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--ink) 60%, transparent);
-}
-
-.pair {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 18px;
-  align-items: center;
-  padding: 12px 0 64px;
-}
-
-.frame {
-  background: var(--white);
-  border: 3px solid var(--ink);
-  border-radius: 28px;
-  box-shadow: 8px 8px 0 0 var(--ink);
+/* Title words rise into their line, one at a time, as on textwork.co. The
+   mask hides the start position just below where the word lands; its padding
+   leaves room for the title's stroke and offset shadow. */
+.hero-word {
+  display: inline-block;
   overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.08em 0.32em 0.2em;
+  margin: -0.08em -0.32em -0.2em;
 }
 
-.frame svg { display: block; width: 100%; height: auto; }
-
-.frame figcaption {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  padding: 12px 16px 14px;
-  border-top: 3px solid var(--ink);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+@keyframes hero-word-up {
+  from { opacity: 0; transform: translateY(40%); }
+  35% { opacity: 1; }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.arrow {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  background: var(--hot);
-  color: var(--white);
-  border: 3px solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-size: 22px;
-}
-
-.shop {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: -36px 0 72px;
-}
-
-.piece {
-  background: var(--white);
-  border: 2px solid var(--ink);
-  border-radius: 16px;
-  box-shadow: 3px 3px 0 0 var(--ink);
-  padding: 12px 14px;
-}
-
-.piece b { display: block; font-size: 13px; }
-.piece span { display: block; margin-top: 4px; font-size: 12px; color: color-mix(in srgb, var(--ink) 65%, transparent); }
-
-section.block { padding: 28px 0 72px; }
-
-.section-intro {
-  max-width: 38rem;
-  margin: 14px auto 0;
-  text-align: center;
-  color: color-mix(in srgb, var(--ink) 72%, transparent);
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-top: 36px;
-}
-
-.step {
-  background: var(--white);
-  border: 3px solid var(--ink);
-  border-radius: 24px;
-  box-shadow: 6px 6px 0 0 var(--ink);
-  padding: 22px 20px 24px;
-}
-
-.num {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: var(--yellow);
-  border: 2px solid var(--ink);
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.step p {
-  margin: 10px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: color-mix(in srgb, var(--ink) 72%, transparent);
-}
-
-.facts {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 22px;
-  align-items: stretch;
-  margin-top: 36px;
-}
-
-.fact-list { display: grid; gap: 12px; }
-
-.fact {
-  display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: 14px;
-  align-items: center;
-  background: var(--white);
-  border: 3px solid var(--ink);
-  border-radius: 18px;
-  padding: 12px 14px;
-  box-shadow: 4px 4px 0 0 var(--ink);
-}
-
-.swatch {
-  height: 64px;
-  border-radius: 12px;
-  border: 2px solid var(--ink);
-}
-
-.fact p { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: color-mix(in srgb, var(--ink) 70%, transparent); }
-
-.note {
-  background: var(--yellow);
-  border: 3px solid var(--ink);
-  border-radius: 24px;
-  box-shadow: 8px 8px 0 0 var(--ink);
-  padding: 28px 28px 24px;
-  transform: rotate(-0.6deg);
-}
-
-.note p {
-  margin: 0;
-  font-family: var(--font-note);
-  font-size: 1.7rem;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.note small {
+.hero-word-up {
   display: block;
-  margin-top: 16px;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 700;
+  animation: hero-word-up 0.25s cubic-bezier(0.33, 0.9, 0.35, 1) both;
 }
 
-.looks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-top: 36px;
+@keyframes hero-fade {
+  from { opacity: 0; }
 }
 
-.look {
-  border: 3px solid var(--ink);
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: 5px 5px 0 0 var(--ink);
-  background: var(--white);
+.hero-fade {
+  animation: hero-fade 0.8s ease-out both;
 }
 
-.look-bar { height: 88px; border-bottom: 3px solid var(--ink); }
-.look div { padding: 14px 14px 16px; }
-.look b { display: block; font-size: 14px; }
-.look span { display: block; margin-top: 6px; font-size: 12px; line-height: 1.45; color: color-mix(in srgb, var(--ink) 68%, transparent); }
-
-.center-title { text-align: center; }
-
-footer {
-  border-top: 3px solid var(--ink);
-  margin-top: 20px;
+/* Keeps the button from playing its hover and press motion while it fades in. */
+.hero-cta-hold,
+.hero-cta-hold * {
+  pointer-events: none !important;
+  transition: none !important;
 }
 
-.footer-inner {
-  width: min(1120px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 22px 0 32px;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 13px;
-  font-weight: 700;
+.hero-cta-snap,
+.hero-cta-snap * {
+  transition: none !important;
 }
 
-@media (max-width: 860px) {
-  .pair { grid-template-columns: 1fr; }
-  .arrow { justify-self: center; transform: rotate(90deg); }
-  .shop, .steps, .looks { grid-template-columns: 1fr 1fr; }
-  .facts { grid-template-columns: 1fr; }
-  .btn-lg { font-size: 20px; }
-  h1 { text-shadow: 3px 3px 0 var(--white); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-word-up,
+  .hero-fade {
+    animation: none;
+  }
 }
 
-@media (max-width: 560px) {
-  .shop, .steps, .looks { grid-template-columns: 1fr; }
-  .nav .btn-ghost { display: none; }
-  .footer-inner { flex-direction: column; }
+/* The textwork.co mockup entrance: larger and below the slot, rising in. */
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    translate: 0 48%;
+    scale: 1.28;
+  }
+}
+
+.stage-enter {
+  transform-origin: center bottom;
+  animation: stage-in 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-play-state: paused;
+}
+
+/* Mirrored inside the card: the photo drops in from above. The scale from
+   the top matches the rise, so its bottom edge never lifts off the card's. */
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    translate: 0 -25%;
+    scale: 1.25;
+  }
+}
+
+.stage-enter .photo-enter {
+  transform-origin: center top;
+  animation: photo-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+  animation-play-state: paused;
+}
+
+.stage-enter.entrance-go .photo-enter {
+  animation-play-state: running;
+}
+
+/* Larger and a little above its spot, settling onto the floor point set
+   as the transform origin. */
+@keyframes piece-in {
+  from {
+    opacity: 0;
+    translate: 0 calc(-1 * var(--piece-drop, 40px));
+    scale: 1.28;
+  }
+}
+
+.piece-enter {
+  animation: piece-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-play-state: paused;
+}
+
+.entrance-go {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-enter,
+  .stage-enter .photo-enter,
+  .piece-enter {
+    animation: none;
+  }
+}
+
+@keyframes room-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.room-in {
+  animation: room-in 0.35s ease;
+}
+
+.footer-mark {
+  text-shadow:
+    1px 0 0 #fff,
+    2px 0 0 #fff,
+    3px 0 0 #fff,
+    0 1px 0 #fff,
+    0 2px 0 #fff,
+    0 3px 0 #fff,
+    1px 1px 0 #fff,
+    2px 1px 0 #fff,
+    3px 1px 0 #fff,
+    1px 2px 0 #fff,
+    2px 2px 0 #fff,
+    3px 2px 0 #fff,
+    1px 3px 0 #fff,
+    2px 3px 0 #fff,
+    3px 3px 0 #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-in {
+    animation: none;
+  }
+}
+
+@keyframes agent-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.agent-float {
+  animation: agent-float 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-float {
+    animation: none;
+  }
 }

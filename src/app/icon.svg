@@ -1,8 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#fdf8d8"/>
-  <rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-  <path d="M12 36c0-6 4-10 10-10h20c6 0 10 4 10 10v6H12v-6z" fill="#ff6b4a" stroke="#1a1a1a" stroke-width="3"/>
-  <path d="M10 42h44v4c0 3-2 5-5 5H15c-3 0-5-2-5-5v-4z" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
-  <circle cx="20" cy="50" r="3" fill="#1a1a1a"/>
-  <circle cx="44" cy="50" r="3" fill="#1a1a1a"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40">
+  <defs>
+    <symbol id="sofa" viewBox="0 0 200 112">
+      <ellipse cx="100" cy="104" rx="72" ry="4" fill="#1a1a1a" opacity="0.12"/>
+      <rect x="48" y="96" width="14" height="7" rx="1.5" fill="#3a2418"/>
+      <rect x="138" y="96" width="14" height="7" rx="1.5" fill="#3a2418"/>
+      <path fill="#6b4630" d="M42 88h116c6 0 8 2.5 8 6s-2 6-8 6H42c-6 0-8-2.5-8-6s2-6 8-6z"/>
+      <rect x="14" y="50" width="48" height="44" rx="22" fill="#e45436"/>
+      <rect x="20" y="56" width="36" height="32" rx="16" fill="#ff6b4a"/>
+      <rect x="138" y="50" width="48" height="44" rx="22" fill="#e45436"/>
+      <rect x="144" y="56" width="36" height="32" rx="16" fill="#ff6b4a"/>
+      <path fill="#ff6b4a" d="M48 44c0-16 12-26 30-26h44c18 0 30 10 30 26v30H48V44z"/>
+      <path fill="#ff8d74" d="M70 22H90A6 6 0 0 1 96 28V52A6 6 0 0 1 90 58H70A14 14 0 0 1 56 44V36A14 14 0 0 1 70 22Z"/>
+      <path fill="#ff8d74" d="M110 22H130A14 14 0 0 1 144 36V44A14 14 0 0 1 130 58H110A6 6 0 0 1 104 52V28A6 6 0 0 1 110 22Z"/>
+      <path fill="#e45436" d="M46 68h108v14c0 6-6 10-14 10H60c-8 0-14-4-14-10V68z"/>
+      <rect x="54" y="70" width="42" height="16" rx="5" fill="#ff7a58"/>
+      <rect x="104" y="70" width="42" height="16" rx="5" fill="#ff7a58"/>
+    </symbol>
+    <clipPath id="lens">
+      <circle cx="26.5" cy="18.5" r="6.4"/>
+    </clipPath>
+    <radialGradient id="glass" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#bfe3ff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#4a9bd9" stop-opacity="0.25"/>
+    </radialGradient>
+  </defs>
+  <g transform="translate(20 23) scale(1.6445) translate(-20 -23)">
+  <use href="#sofa" xlink:href="#sofa" x="2" y="16" width="36" height="20.2"/>
+  <g clip-path="url(#lens)">
+    <rect x="19.5" y="11.5" width="14" height="14" fill="#fdf8d8"/>
+    <g transform="translate(-15.9 -11.1) scale(1.6)">
+      <use href="#sofa" xlink:href="#sofa" x="2" y="16" width="36" height="20.2"/>
+    </g>
+    <circle cx="26.5" cy="18.5" r="7.2" fill="url(#glass)"/>
+    <path d="M22.3 16.4a4.8 4.8 0 0 1 3.4-3.2" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/>
+  </g>
+  <g fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="26.5" cy="18.5" r="7.2"/>
+    <path d="M31.3 23.8 L35.5 28.5"/>
+  </g>
+  </g>
 </svg>

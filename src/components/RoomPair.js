@@ -1,73 +1,88 @@
-function Window() {
-  return (
-    <g>
-      <rect x="332" y="28" width="150" height="118" rx="8" fill="#d7ecf8" stroke="#1a1a1a" strokeWidth="3" />
-      <path d="M407 28v118M332 87h150" stroke="#1a1a1a" strokeWidth="3" />
-      <circle cx="438" cy="52" r="14" fill="#ffea63" stroke="#1a1a1a" strokeWidth="3" />
-    </g>
-  );
-}
+"use client";
 
-function RoomShell({ children }) {
+import { useState } from "react";
+import { rooms as ROOMS } from "@/content/rooms";
+
+function Chevron({ direction }) {
+  const d = direction === "left" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7";
   return (
-    <svg viewBox="0 0 520 360" role="img">
-      <rect width="520" height="360" fill="#f7f1dc" />
-      <Window />
-      <path d="M0 214h520l-40 146H40L0 214z" fill="#e7c98a" />
-      <path d="M70 214l-28 146M150 214l-8 146M250 214v146M350 214l8 146M430 214l22 146" stroke="#d7b56d" strokeWidth="3" />
-      <path d="M0 214h520" stroke="#1a1a1a" strokeWidth="3" />
-      <polygon points="300,214 470,150 500,214" fill="#ffea63" opacity="0.55" />
-      {children}
+    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d={d} />
     </svg>
   );
 }
 
 export default function RoomPair() {
+  const [index, setIndex] = useState(0);
+  const room = ROOMS[index];
+  const step = (delta) => setIndex((current) => (current + delta + ROOMS.length) % ROOMS.length);
+
   return (
-    <div className="wrap" id="rooms">
-      <div className="pair">
-        <figure className="frame">
-          <RoomShell>
-            <title>Empty listing photo</title>
-          </RoomShell>
-          <figcaption>
-            <span>Empty</span>
-            <span>Listing photo</span>
-          </figcaption>
-        </figure>
-        <div className="arrow" aria-hidden="true">→</div>
-        <figure className="frame">
-          <RoomShell>
-            <title>The same room with furniture placed in it</title>
-            <ellipse cx="230" cy="308" rx="140" ry="24" fill="#ffd4c4" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="86" y="232" width="34" height="52" rx="12" fill="#ff6b4a" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="196" y="232" width="34" height="52" rx="12" fill="#ff6b4a" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="96" y="214" width="124" height="42" rx="14" fill="#ff6b4a" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="92" y="246" width="138" height="30" rx="12" fill="#ffb199" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="108" y="274" width="8" height="18" rx="2" fill="#1a1a1a" />
-            <rect x="206" y="274" width="8" height="18" rx="2" fill="#1a1a1a" />
-            <ellipse cx="300" cy="292" rx="34" ry="12" fill="#4a9bd9" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="296" y="292" width="8" height="24" fill="#1a1a1a" />
-            <rect x="360" y="248" width="8" height="58" fill="#1a1a1a" />
-            <path d="M348 252h32l-6-26h-20z" fill="#ffea63" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="412" y="278" width="28" height="22" rx="4" fill="#fff" stroke="#1a1a1a" strokeWidth="3" />
-            <circle cx="418" cy="266" r="14" fill="#2f7d32" stroke="#1a1a1a" strokeWidth="3" />
-            <circle cx="434" cy="258" r="16" fill="#3d9a42" stroke="#1a1a1a" strokeWidth="3" />
-            <rect x="48" y="72" width="72" height="52" rx="6" fill="#fff" stroke="#1a1a1a" strokeWidth="3" />
-            <path d="M60 108c16-18 30-4 42 4" fill="none" stroke="#ff6b4a" strokeWidth="3" />
-          </RoomShell>
-          <figcaption>
-            <span>Furnished</span>
-            <span>Same photo</span>
-          </figcaption>
-        </figure>
+    <section className="mx-auto w-full max-w-[1120px] px-5 pt-16 pb-32 max-md:pt-10 max-md:pb-20" id="rooms">
+      <h2 className="m-0 mb-8 text-center font-display text-[clamp(2rem,5vw,3.2rem)] leading-[0.95] tracking-[0.03em] text-hot uppercase [-webkit-text-stroke:1.5px_#1a1a1a] [paint-order:stroke_fill]">
+        Before and after
+      </h2>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-1.5">
+          <button type="button" className="grid h-[22px] w-[22px] place-items-center border-0 bg-transparent p-0 text-hot" aria-label="Previous room" onClick={() => step(-1)}>
+            <Chevron direction="left" />
+          </button>
+          <p className="m-0 font-display text-xl tracking-[0.04em] text-hot uppercase md:text-2xl">{room.title}</p>
+          <button type="button" className="grid h-[22px] w-[22px] place-items-center border-0 bg-transparent p-0 text-hot" aria-label="Next room" onClick={() => step(1)}>
+            <Chevron direction="right" />
+          </button>
+        </div>
+        <div className="flex gap-2">
+          {ROOMS.map((item, i) => (
+            <button
+              key={item.title}
+              type="button"
+              className={`h-[19.25px] rounded-full border-2 border-ink p-0 transition-[width,background-color] duration-200 ${i === index ? "w-[46px] bg-hot" : "w-[19.25px] bg-transparent"}`}
+              aria-label={item.title}
+              aria-pressed={i === index}
+              onClick={() => setIndex(i)}
+            />
+          ))}
+        </div>
       </div>
-      <div className="shop">
-        <div className="piece"><b>Low sofa, oak legs</b><span>$890 · in the photo</span></div>
-        <div className="piece"><b>Linen drum shade</b><span>$140 · in the photo</span></div>
-        <div className="piece"><b>Blush flatweave</b><span>$320 · in the photo</span></div>
-        <div className="piece"><b>Round side table</b><span>$260 · in the photo</span></div>
+      <div className="room-in" key={room.title}>
+        <div className="grid grid-cols-1 items-center gap-[18px] py-3 pb-5 md:grid-cols-[1fr_auto_1fr]">
+          <figure className="mx-[13.333px] overflow-hidden rounded-[28px] border-[3px] border-ink bg-white shadow-[8px_8px_0_0_#1a1a1a]">
+            <div className="aspect-[4/3] bg-cream">
+              <img className="block h-full w-full object-cover" src={room.before} alt={room.beforeAlt} />
+            </div>
+            <figcaption className="flex justify-between px-4 py-2.5 font-mono text-[13px]">
+              <span className="font-bold">Empty</span>
+              <span className="text-ink/55">{room.place}</span>
+            </figcaption>
+          </figure>
+          <svg className="mx-auto h-[36.8px] w-[36.8px] rotate-90 text-hot md:rotate-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+          <figure className="mx-[13.333px] overflow-hidden rounded-[28px] border-[3px] border-ink bg-white shadow-[8px_8px_0_0_#1a1a1a]">
+            <div className="aspect-[4/3] bg-cream">
+              <img className="block h-full w-full object-cover" src={room.after} alt={room.afterAlt} />
+            </div>
+            <figcaption className="flex justify-between px-4 py-2.5 font-mono text-[13px]">
+              <span className="font-bold">Furnished</span>
+              <span className="text-ink/55">{room.place}</span>
+            </figcaption>
+          </figure>
+        </div>
+        <p className="m-0 pt-2 text-center text-sm">
+          <a className="font-bold text-ink underline decoration-hot underline-offset-4" href={`/rooms/${room.slug}`}>
+            {room.h1}
+          </a>
+        </p>
+        <div className="m-0 grid grid-cols-1 gap-3 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+          {room.pieces.map(([name, note]) => (
+            <div className="rounded-2xl border-[3px] border-ink bg-white px-3.5 py-3" key={name}>
+              <b className="block font-display text-[1.2rem] font-normal">{name}</b>
+              <span className="text-xs text-ink/60">{note}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
